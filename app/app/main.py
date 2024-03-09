@@ -23,3 +23,11 @@ if prompt := st.chat_input('Whats Up ?'):
     
     with st.chat_message('user'):
         st.markdown(prompt)
+    
+    with st.chat_message('assistant'):
+        respose = ollama.chat(model='mistral-openorca', messages= st.session_state['messages'] , stream= False) 
+        message = respose['message']['content'] # works when stream false
+        st.markdown(message)
+        
+        st.session_state['messages'].append({'role': 'assistant', 'content': message})
+        
