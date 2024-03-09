@@ -9,6 +9,17 @@ st.write('Codi is a simple AI tool to unminify your code. Just paste your minifi
 #         unminified = ollama.unminify(prompt)
 #         st.write(unminified)
 
+if "messages" not in st.session_state: # Initialize state history
+    st.session_state["messages"] = []
+
+# Display chat message in history
+for message in st.session_state["messages"]:
+    with st.chat_message(message["role"]):
+        st.markdown(message['content'])
+
 if prompt := st.chat_input('Whats Up ?'):
+    
+    st.session_state['messages'].append({'role': 'user', 'content': prompt})
+    
     with st.chat_message('user'):
         st.markdown(prompt)
